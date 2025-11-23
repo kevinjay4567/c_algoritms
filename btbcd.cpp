@@ -1,14 +1,17 @@
 #include "bcd.h"
 #include <bitset>
 #include <iostream>
+#include <string>
 #include <sys/types.h>
 
+const u_int BITS = 16;
+
 Bcd *convert_bits_to_bcd(std::bitset<16> bits) {
+std::cout << "\n============ Procedimiento =============\n";
   Bcd *bcd = new Bcd();
 
   if (bits.to_ulong() < 10) {
     bcd->unidad = bits.to_ulong();
-
     return bcd;
   }
 
@@ -23,7 +26,7 @@ Bcd *convert_bits_to_bcd(std::bitset<16> bits) {
 }
 
 std::bitset<16> convert_bcd_to_bits(Bcd bcd) {
-  ulong decimal;
+  uint decimal{};
 
   decimal += bcd.unidad.to_ulong();
   decimal += bcd.decena.to_ulong() * 10;
@@ -32,6 +35,14 @@ std::bitset<16> convert_bcd_to_bits(Bcd bcd) {
   decimal += bcd.d_mil.to_ulong() * 10000;
 
   return std::bitset<16>(decimal);
+}
+
+u_long binToDec(const std::string &bin) {
+    return std::bitset<BITS>(bin).to_ulong();
+}
+
+std::bitset<BITS> decToBin(int num) {
+    return std::bitset<BITS> (num);
 }
 
 int main() {
@@ -48,16 +59,22 @@ int main() {
     std::cout << "=== Conversor de decimal/binario a formato BCD (max 16 "
                  "bits) ===\n";
     std::cout
-        << "Ingrese el numero a convertir (decimal o binario [ej: 1011]): ";
+        << "Ingrese el numero a convertir (decimal o binario [ej: b1011]): ";
 
     std::cin >> input;
 
-    std::bitset<16> bits(input);
+    u_long number{};
 
-    Bcd *bcd = convert_bits_to_bcd(bits);
+    if (input[0] == 'b') {
+        number = binToDec(input.substr(1));
+    } else {
+        number = std::stoi(input);
+    }
 
-    std::cout << "DECIMAL: " << bits.to_ulong() << '\n';
-    std::cout << "BINARY:  " << bits << '\n';
+    Bcd *bcd = convert_bits_to_bcd(decToBin(number));
+
+    std::cout << "\nDECIMAL: " << number << '\n';
+    std::cout << "BINARY:  " << decToBin(number) << '\n';
     std::cout << "BCD:     " << bcd->to_string() << '\n';
 
   } else {
@@ -92,7 +109,7 @@ int main() {
 
     std::cout << "\nBCD: " << bcd.to_string() << '\n';
     std::cout << "DECIMAL: " << convert_bcd_to_bits(bcd).to_ulong() << '\n';
-    std::cout << "BINARY:  " << convert_bcd_to_bits(bcd) << '\n';
+    std::cout << "BINARY:  " << convert_bcd_to_bits(bcd).to_string() << '\n';
   }
 
   return 0;

@@ -1,5 +1,6 @@
 #include "bcd.h"
 #include <bitset>
+#include <iostream>
 #include <string>
 
 bool fullAdder(bool b1, bool b2, bool &carry) {
@@ -42,8 +43,14 @@ void Bcd::shift(std::bitset<4> &b1, bool bit) {
     b1.flip(0);
   }
 
+  std::cout << "Desplazamiento: " << this->to_string() << '\n';
+
   if (b1.to_ulong() >= 5) {
-    b1 = bitsetAdd(b1, {0b0011});
+    std::bitset<4> result {bitsetAdd(b1, {0b0011})};
+
+    std::cout << "Se suma (0011): " << b1.to_string() << " -> " << result << '\n';
+
+    b1 = result;
   }
 }
 
