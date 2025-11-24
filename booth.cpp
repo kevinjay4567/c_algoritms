@@ -145,20 +145,21 @@ std::bitset<32> signed_booth_multiply(std::bitset<16> m, std::bitset<16> q) {
   bool q_plus{0};
   std::bitset<16> dl(q);
 
-  std::cout << std::left << std::setw(60)
-            << "=================== Procedimiento ===================\n";
+  std::cout << std::left << std::setw(50)
+            << "====================== Procedimiento ======================\n";
 
   while (count > 0) {
     bool q_0 = dl[0];
 
     std::cout << std::left << "| " << std::setw(6) << "Cuenta"
               << " | " << std::setw(3) << "Q_0"
+              << " | " << std::setw(3) << "Q_+"
               << " | " << std::setw(16) << "AL"
               << " | " << std::setw(16) << "DL"
               << " |\n";
 
     std::cout << std::left << "| " << std::setw(6) << count << " | "
-              << std::setw(3) << q_0 << " | " << std::setw(16) << al.to_string()
+              << std::setw(3) << q_0 << " | " << std::setw(3) << q_plus << " | " << std::setw(16) << al.to_string()
               << " | " << std::setw(16) << dl.to_string() << " |\n";
 
     if (q_0 > q_plus) {
