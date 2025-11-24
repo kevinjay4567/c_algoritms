@@ -49,7 +49,7 @@ int main() {
   int decision{};
 
   std::cout << "=== [1] Convertir de decimal/binario a BCD (max 16 bits) ===\n";
-  std::cout << "=== [2] Convertir de BCD en formato BCD (max 16 bits) ===\n";
+  std::cout << "=== [2] Convertir de BCD en formato BCD a decimal/binario (max 16 bits) ===\n";
 
   std::cout << "[opcion 1 por defecto]: ";
   std::cin >> decision;

@@ -3,12 +3,20 @@
 #include <iostream>
 #include <string>
 
+/**
+ * Suma 2 bits individuales
+ *
+ */
 bool fullAdder(bool b1, bool b2, bool &carry) {
   bool sum = (b1 ^ b2) ^ carry;
   carry = (b1 && b2) || (b1 && carry) || (b2 && carry);
   return sum;
 }
 
+/**
+ * Suma de bitsets a 4 bits
+ *
+ */
 std::bitset<4> bitsetAdd(std::bitset<4> x, std::bitset<4> y) {
   bool carry{};
   std::bitset<4> ans;
@@ -36,7 +44,7 @@ Bcd::Bcd(std::bitset<4> u, std::bitset<4> d, std::bitset<4> c, std::bitset<4> u_
     this->d_mil = d_m;
 }
 
-// private methods
+// metodos privados
 void Bcd::shift(std::bitset<4> &b1, bool bit) {
   b1 <<= 1;
   if (bit) {
@@ -54,7 +62,7 @@ void Bcd::shift(std::bitset<4> &b1, bool bit) {
   }
 }
 
-// public methods
+// metodos publicos
 std::string Bcd::to_string() {
   return d_mil.to_string() + ' ' + u_mil.to_string() + ' ' +
          centena.to_string() + ' ' + decena.to_string() + ' ' +
