@@ -36,15 +36,16 @@ void delete(Array *list) { free(list->data); }
 
 int main() {
   Array letters = create_list(5, sizeof(char));
+  int *p;
   char n = 'k';
   set(&letters, 0, &n);
-    n = 'e';
+  n = 'e';
   set(&letters, 1, &n);
-    n = 'v';
+  n = 'v';
   set(&letters, 2, &n);
-    n = 'i';
+  n = 'i';
   set(&letters, 3, &n);
-    n = 'n';
+  n = 'n';
   set(&letters, 4, &n);
 
   for (int i = 0; i < (int)letters.length; i++) {
@@ -52,5 +53,6 @@ int main() {
   }
 
   delete(&letters);
+
   return 0;
 }
