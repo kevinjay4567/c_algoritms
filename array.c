@@ -9,8 +9,8 @@ typedef struct {
   void *data;
 } Array;
 
-Array create_list(u_int size, size_t element_size) {
-  Array list = {size, element_size, calloc(element_size * size, element_size)};
+Array create_list(size_t element_size) {
+  Array list = {1, element_size, calloc(element_size, element_size)};
 
   return list;
 }
@@ -24,6 +24,19 @@ void *get(Array list, u_int index) {
   return list.data + (index * list.element_size);
 }
 
+void add(Array *list, void *value) {
+	size_t n_len = list->length + 1;
+
+	void *n_data = realloc(list->data, (list->length * list->element_size));
+	if (n_data == NULL) return;
+
+	list->data = n_data;
+
+	memcpy(list->data + (list->length * list->element_size), value, list->element_size);
+
+	list->length = n_len;
+}
+
 void set(Array *list, u_int index, void *value) {
   if (index >= list->length) {
     printf("Error: fuera de rango");
@@ -35,18 +48,18 @@ void set(Array *list, u_int index, void *value) {
 void delete(Array *list) { free(list->data); }
 
 int main() {
-  Array letters = create_list(5, sizeof(char));
+  Array letters = create_list(sizeof(char));
   int *p;
   char n = 'k';
-  set(&letters, 0, &n);
+  add(&letters, &n);
   n = 'e';
-  set(&letters, 1, &n);
+  add(&letters, &n);
   n = 'v';
-  set(&letters, 2, &n);
+  add(&letters, &n);
   n = 'i';
-  set(&letters, 3, &n);
+  add(&letters, &n);
   n = 'n';
-  set(&letters, 4, &n);
+  add(&letters, &n);
 
   for (int i = 0; i < (int)letters.length; i++) {
     printf("%c\n", (*(char *)get(letters, i)));
