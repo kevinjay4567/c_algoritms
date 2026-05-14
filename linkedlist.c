@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#define LINKEDLIST_IMPLEMENTATION_H
+#include "linkedlist.h"
 
 typedef struct {
   int val;
@@ -185,6 +187,8 @@ int main() {
   linked_list_insert(&list, 4, 10);
 
   print_linked_list(list);
+
+  print_msg();
 
   return 0;
 }
